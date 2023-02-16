@@ -41,7 +41,7 @@ export default function Home() {
                   <Container>
                     <div className={styles.miniContainer}>
                       <TickerSymbolDropdown></TickerSymbolDropdown>
-                      <h3 className={styles.title}>TSLA</h3>
+                      {/* <h3 className={styles.title}>TSLA</h3> */}
                       <Image
                         priority
                         src="/images/tsla.png"

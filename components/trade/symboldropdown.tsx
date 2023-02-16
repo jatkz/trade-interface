@@ -1,5 +1,5 @@
 import { Fragment, useState } from "react";
-import { Listbox, Transition } from "@headlessui/react";
+import { Listbox, Combobox, Transition } from "@headlessui/react";
 import {
   CheckIcon,
   ChevronUpDownIcon,
@@ -22,104 +22,109 @@ const people = [
 ];
 
 export default function TickerSymbolDropdown() {
-  const [selected, setSelected] = useState(people[3]);
+  const [query, setQuery] = useState<any>("");
+  const [selected, setSelected] = useState<any>(null);
+
+  const filteredPeople =
+    query === ""
+      ? people
+      : people.filter((person) => {
+          return person.name.toLowerCase().includes(query.toLowerCase());
+        });
 
   return (
-    <Listbox value={selected} onChange={setSelected}>
-      {({ open }) => (
-        <>
-          <div className={styles.dropdown}>
-            <Listbox.Button className={styles.button}>
-              <span className={styles.flexcenter}>
-                <span
-                  aria-label={selected.online ? "Online" : "Offline"}
-                  className={clsx(
-                    {
-                      [styles.selectedOnline]: selected.online === true,
-                      [styles.selectedOffline]: selected.online === false,
-                    },
-                    styles.selectedStatus
-                  )}
-                />
-                <span className={styles.selectedLabel}>{selected.name}</span>
-              </span>
-              <span className={styles.buttoniconwrapper}>
-                <ChevronDownIcon
-                  className={styles.buttoniconGray}
-                  aria-hidden="true"
-                />
-              </span>
-            </Listbox.Button>
+    <Combobox value={selected} onChange={setSelected}>
+      <div className={styles.dropdown}>
+        <Combobox.Input
+          className={styles.input}
+          onChange={(event) => setQuery(event.target.value)}
+          displayValue={(person: any) => person?.name}
+        />
+        <Combobox.Button className={styles.button}>
+          {/* <span className={styles.flexcenter}> */}
+          {/* <span
+              aria-label={selected.online ? "Online" : "Offline"}
+              className={clsx(
+                {
+                  [styles.selectedOnline]: selected.online === true,
+                  [styles.selectedOffline]: selected.online === false,
+                },
+                styles.selectedStatus
+              )}
+            />
 
-            <Transition
-              show={open}
-              as={Fragment}
-              leave={styles.transition}
-              leaveFrom={styles.transitionFrom}
-              leaveTo={styles.transitionTo}
-            >
-              <Listbox.Options className={styles.dropdownContainer}>
-                {people.map((person) => (
-                  <Listbox.Option
-                    key={person.id}
-                    className={({ active }) =>
-                      clsx(
-                        active
-                          ? [styles.textwhite, styles.bgindigo]
-                          : styles.dropdownInactive,
-                        styles.dropdownOption
-                      )
-                    }
-                    value={person}
-                  >
-                    {({ selected, active }) => (
-                      <>
-                        <div className={styles.flexcenter}>
-                          <span
-                            className={clsx(
-                              person.online
-                                ? styles.selectedOnline
-                                : styles.selectedOffline,
-                              styles.dropdownOnlineIcon
-                            )}
-                            aria-hidden="true"
-                          />
-                          <span
-                            className={clsx(
-                              selected ? styles.semibold : styles.normal,
-                              styles.selectedLabel
-                            )}
-                          >
-                            {person.name}
-                            <span className={styles.sr_only}>
-                              {" "}
-                              is {person.online ? "online" : "offline"}
-                            </span>
-                          </span>
-                        </div>
+            <span className={styles.selectedLabel}>{selected.name}</span> */}
 
-                        {selected ? (
-                          <span
-                            className={clsx(
-                              active ? styles.textwhite : styles.textindigo,
-                              styles.dropdownActiveIconWrapper
-                            )}
-                          >
-                            <CheckIcon
-                              className={styles.buttonicon}
-                              aria-hidden="true"
-                            />
-                          </span>
-                        ) : null}
-                      </>
-                    )}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
-            </Transition>
-          </div>
-        </>
-      )}
-    </Listbox>
+          {/* <span className={styles.buttoniconwrapper}> */}
+          <ChevronDownIcon
+            className={styles.buttoniconGray}
+            aria-hidden="true"
+          />
+          {/* </span> */}
+          {/* </span> */}
+        </Combobox.Button>
+
+        {filteredPeople.length > 0 && (
+          <Combobox.Options className={styles.dropdownContainer}>
+            {people.map((person) => (
+              <Combobox.Option
+                key={person.id}
+                className={({ active }) =>
+                  clsx(
+                    active
+                      ? [styles.textwhite, styles.bgindigo]
+                      : styles.dropdownInactive,
+                    styles.dropdownOption
+                  )
+                }
+                value={person}
+              >
+                {({ selected, active }) => (
+                  <>
+                    <div className={styles.flexcenter}>
+                      <span
+                        className={clsx(
+                          person.online
+                            ? styles.selectedOnline
+                            : styles.selectedOffline,
+                          styles.dropdownOnlineIcon
+                        )}
+                        aria-hidden="true"
+                      />
+                      <span
+                        className={clsx(
+                          selected ? styles.semibold : styles.normal,
+                          styles.selectedLabel
+                        )}
+                      >
+                        {person.name}
+                        <span className={styles.sr_only}>
+                          {" "}
+                          is {person.online ? "online" : "offline"}
+                        </span>
+                      </span>
+                    </div>
+
+                    {selected ? (
+                      <span
+                        className={clsx(
+                          active ? styles.textwhite : styles.textindigo,
+                          styles.dropdownActiveIconWrapper
+                        )}
+                      >
+                        <CheckIcon
+                          className={styles.buttonicon}
+                          aria-hidden="true"
+                        />
+                      </span>
+                    ) : null}
+                  </>
+                )}
+              </Combobox.Option>
+            ))}
+          </Combobox.Options>
+        )}
+      </div>
+    </Combobox>
   );
 }

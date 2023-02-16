@@ -1,7 +1,20 @@
 import Head from "next/head";
 import Image from "next/image";
+import styles from '@/styles/Trade.module.css'
+import Container from '@/components/container'
+
+const totals = {
+  netProfit: 105,
+  roi: 155,
+  winrate: 66,
+  avgTrade: 3,
+  avgWin: 9,
+  avgLoss: 0,
+};
 
 export default function Home() {
+
+  const { netProfit, roi, winrate, avgTrade, avgWin, avgLoss } = totals;
   return (
     <>
       <Head>
@@ -13,103 +26,45 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <main>
+      <div className={styles.container}>
+        <div className={styles.column}>
+          <div>Buy/Sell Alert</div>
+          <div>Calculation Inputs</div>
+          <div>Realtime Chart</div>
+        </div>
+        <div className={styles.column}>
+          <Container>
+              <div>
+                <div >
+                  <span>
+                  TSLA
+                    </span>
+                  <Image 
+                    priority
+                    src="/images/tsla.png"
+                    className={styles.borderCircle}
+                    height={50}
+                    width={50}
+                    alt="Tesla"
+                  />
+                </div>
+                <div>$105 estimated $56 realtime</div>
+                <div>#3sigma_margins, bullish</div>
+                <div>Score: 565</div>
+              </div>
+          </Container>
+        <div>Chart</div>
+        <div>Indicators</div>
+        <div>Strategy ROIS</div>
         <div>
           <p>
-            Get started by editing&nbsp;
-            <code>pages/index.tsx</code>
+          TOTAL : NET PROFIT {netProfit} : ROI {roi} : WIN RATE {winrate} : AVG TRADE {avgTrade} : AVG WIN {avgWin} : AVG LOSS {avgLoss}
           </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{" "}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
           </div>
         </div>
-
-        <div>
-          <Image
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
-
-        <div>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
+      </div>
       </main>
     </>
   );

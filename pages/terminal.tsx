@@ -1,7 +1,43 @@
-import { Button, Pane, Text, majorScale, Table } from "evergreen-ui";
+import { Pane, majorScale, Card } from "evergreen-ui";
 import Head from "next/head";
 import styles from "@/styles/First.module.css";
 import { LightWeightChart } from "@/components/lightweightcharts";
+import { GetServerSideProps } from "next";
+import {
+  SymbolCandles,
+  fetchSymbolCandles,
+  CollectionNames,
+} from "@/lib/fetchSymbolCandles";
+
+export const getServerSideProps: GetServerSideProps<{
+  isConnected: boolean;
+  medium?: SymbolCandles;
+}> = async ({ req, res }) => {
+  try {
+    res.setHeader(
+      "Cache-Control",
+      "public, s-maxage=60, stale-while-revalidate=59"
+    );
+
+    const mediumResponse = await fetchSymbolCandles(CollectionNames.medium, {
+      symbol: "TSLA",
+    });
+    if (!mediumResponse) {
+      throw "error in fetchTopMedium";
+    }
+    return {
+      props: {
+        isConnected: true,
+        medium: mediumResponse,
+      },
+    };
+  } catch (e) {
+    console.error(e);
+    return {
+      props: { isConnected: false },
+    };
+  }
+};
 
 export default function TableOne() {
   return (
@@ -13,7 +49,59 @@ export default function TableOne() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <LightWeightChart></LightWeightChart>
+        <Pane className={styles.gridcontainer}>
+          <Card
+            border="0.125rem solid"
+            borderColor="black"
+            background="tint1"
+            padding={majorScale(2)}
+            className={styles.max}
+          >
+            <Pane display="flex" alignItems="center">
+              <Pane width={"100%"} className={styles.gridcontainer}>
+                <Pane
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Pane>TSLA</Pane>
+                  <Pane>+$556</Pane>
+                </Pane>
+                <Pane
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                >
+                  <Pane># 6sigma, easy, wide</Pane>
+                  <Pane>Score: 656</Pane>
+                </Pane>
+              </Pane>
+            </Pane>
+          </Card>
+          <Card
+            border="0.125rem solid"
+            borderColor="black"
+            background="tint1"
+            padding={majorScale(1)}
+            marginX="auto"
+            alignItems="center"
+          >
+            {medium && (
+              <LightWeightChart candlesData={medium.candles}></LightWeightChart>
+            )}
+          </Card>
+          <Pane>
+            <Pane display="flex" alignItems="center" marginX={majorScale(2)}>
+              <IconButton icon={CogIcon} marginRight={majorScale(2)} />
+              <IconButton
+                icon={TrashIcon}
+                intent="danger"
+                marginRight={majorScale(2)}
+              />
+              <IconButton icon={TickIcon} intent="success" />
+            </Pane>
+          </Pane>
+        </Pane>
       </main>
     </>
   );

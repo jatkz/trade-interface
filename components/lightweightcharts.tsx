@@ -1,4 +1,4 @@
-import { SymbolCandles, CandleStick } from "@/lib/findOneSymbolCandles";
+import { SymbolCandles, CandleStick } from "@/lib/fetchSymbolCandles";
 import {
   createChart,
   ColorType,

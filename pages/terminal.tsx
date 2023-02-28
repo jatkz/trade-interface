@@ -1,18 +1,33 @@
-import { Pane, majorScale, Card } from "evergreen-ui";
+import {
+  Pane,
+  majorScale,
+  Card,
+  IconButton,
+  CogIcon,
+  TrashIcon,
+  TickIcon,
+} from "evergreen-ui";
 import Head from "next/head";
-import styles from "@/styles/First.module.css";
+import styles from "@/styles/Terminal.module.css";
 import { LightWeightChart } from "@/components/lightweightcharts";
 import { GetServerSideProps } from "next";
 import {
   SymbolCandles,
   fetchSymbolCandles,
   CollectionNames,
-} from "@/lib/fetchSymbolCandles";
+} from "@/lib/mongodb";
+import { useContext } from "react";
+import { StateContext, useGlobalState } from "@/components/context/state";
 
-export const getServerSideProps: GetServerSideProps<{
+interface Props {
   isConnected: boolean;
   medium?: SymbolCandles;
-}> = async ({ req, res }) => {
+}
+
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  req,
+  res,
+}) => {
   try {
     res.setHeader(
       "Cache-Control",
@@ -25,6 +40,7 @@ export const getServerSideProps: GetServerSideProps<{
     if (!mediumResponse) {
       throw "error in fetchTopMedium";
     }
+    // todo transform data
     return {
       props: {
         isConnected: true,
@@ -39,7 +55,9 @@ export const getServerSideProps: GetServerSideProps<{
   }
 };
 
-export default function TableOne() {
+export default function TableOne({ isConnected, medium }: Props) {
+  const { state, setState } = useGlobalState();
+
   return (
     <>
       <Head>

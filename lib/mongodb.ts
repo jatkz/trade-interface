@@ -1,4 +1,4 @@
-import { MongoClient, MongoOptions } from "mongodb";
+import { MongoClient, MongoOptions, Filter, Document, WithId } from "mongodb";
 
 if (!process.env.MONGO_URI) {
   throw new Error('Invalid/Missing environment variable: "MONGO_URI"');
@@ -31,3 +31,44 @@ if (process.env.NODE_ENV === "development") {
 // Export a module-scoped MongoClient promise. By doing this in a
 // separate module, the client can be shared across functions.
 export default clientPromise;
+
+export type CandleStick = {
+  datetime: number; // Unix timestamp in milliseconds
+  open: number; // Open price
+  high: number; // High price
+  low: number; // Low price
+  close: number; // Close price
+  volume: number; // Volume
+};
+
+export type SymbolCandles = {
+  symbol: string;
+  candles: CandleStick[];
+  meanVolume: number;
+  stdVolume: number;
+};
+
+export enum CollectionNames {
+  short = "Short",
+  medium = "Medium",
+}
+
+export const fetchSymbolCandles = async (
+  collectionName: CollectionNames,
+  filter: Filter<Document>
+) => {
+  try {
+    const client = await clientPromise;
+    const db = client.db("tdameritrade");
+
+    const symbolset = await db.collection(collectionName).findOne(filter);
+
+    if (!symbolset) {
+      throw "No symbolset found";
+    }
+
+    return JSON.parse(JSON.stringify(symbolset)) as WithId<SymbolCandles>;
+  } catch (e) {
+    console.error(e);
+  }
+};

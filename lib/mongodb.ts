@@ -1,3 +1,4 @@
+import { UTCTimestamp } from "lightweight-charts";
 import { MongoClient, MongoOptions, Filter, Document, WithId } from "mongodb";
 
 if (!process.env.MONGO_URI) {
@@ -39,6 +40,8 @@ export type CandleStick = {
   low: number; // Low price
   close: number; // Close price
   volume: number; // Volume
+  /** calculated fields, could be a task to move to more efficient backend layer */
+  time: UTCTimestamp; // Unix timestamp in seconds
 };
 
 export type SymbolCandles = {
@@ -61,13 +64,22 @@ export const fetchSymbolCandles = async (
     const client = await clientPromise;
     const db = client.db("tdameritrade");
 
-    const symbolset = await db.collection(collectionName).findOne(filter);
+    const symbolset = await db
+      .collection<SymbolCandles>(collectionName)
+      .findOne(filter);
 
     if (!symbolset) {
       throw "No symbolset found";
     }
 
-    return JSON.parse(JSON.stringify(symbolset)) as WithId<SymbolCandles>;
+    symbolset.candles = symbolset.candles.map((candle) => {
+      return {
+        ...candle,
+        time: (candle.datetime / 1000) as any,
+      };
+    });
+
+    return JSON.parse(JSON.stringify(symbolset));
   } catch (e) {
     console.error(e);
   }

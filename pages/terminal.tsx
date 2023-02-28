@@ -16,13 +16,17 @@ import {
   fetchSymbolCandles,
   CollectionNames,
 } from "@/lib/mongodb";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { StateContext, useGlobalState } from "@/components/context/state";
+import SymbolCard from "@/components/symbolcard";
+import InputGrid from "@/components/inputgrid";
 
 interface Props {
   isConnected: boolean;
   medium?: SymbolCandles;
 }
+
+const symbol = "TSLA";
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   req,
@@ -35,7 +39,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     );
 
     const mediumResponse = await fetchSymbolCandles(CollectionNames.medium, {
-      symbol: "TSLA",
+      symbol: symbol,
     });
     if (!mediumResponse) {
       throw "error in fetchTopMedium";
@@ -56,7 +60,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 };
 
 export default function TableOne({ isConnected, medium }: Props) {
-  const { state, setState } = useGlobalState();
+  const { state, setPartialState } = useGlobalState();
+  const [pageState, setPageState] = useState({
+    symbol: symbol,
+    roi: 556,
+    tags: ["#6sigma", "#easy", "#wide"],
+    score: 656,
+  });
 
   return (
     <>
@@ -67,7 +77,7 @@ export default function TableOne({ isConnected, medium }: Props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Pane className={styles.gridcontainer}>
+        <Pane>
           <Card
             border="0.125rem solid"
             borderColor="black"
@@ -75,27 +85,9 @@ export default function TableOne({ isConnected, medium }: Props) {
             padding={majorScale(2)}
             className={styles.max}
           >
-            <Pane display="flex" alignItems="center">
-              <Pane width={"100%"} className={styles.gridcontainer}>
-                <Pane
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Pane>TSLA</Pane>
-                  <Pane>+$556</Pane>
-                </Pane>
-                <Pane
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Pane># 6sigma, easy, wide</Pane>
-                  <Pane>Score: 656</Pane>
-                </Pane>
-              </Pane>
-            </Pane>
+            <SymbolCard {...pageState}></SymbolCard>
           </Card>
+          <Pane paddingY={2}></Pane>
           <Card
             border="0.125rem solid"
             borderColor="black"
@@ -108,16 +100,19 @@ export default function TableOne({ isConnected, medium }: Props) {
               <LightWeightChart candlesData={medium.candles}></LightWeightChart>
             )}
           </Card>
+          <Pane paddingY={2}></Pane>
+          <Pane display="flex" alignItems="center">
+            <IconButton icon={CogIcon} marginRight={majorScale(2)} />
+            <IconButton
+              icon={TrashIcon}
+              intent="danger"
+              marginRight={majorScale(2)}
+            />
+            <IconButton icon={TickIcon} intent="success" />
+          </Pane>
+          <Pane paddingY={2}></Pane>
           <Pane>
-            <Pane display="flex" alignItems="center" marginX={majorScale(2)}>
-              <IconButton icon={CogIcon} marginRight={majorScale(2)} />
-              <IconButton
-                icon={TrashIcon}
-                intent="danger"
-                marginRight={majorScale(2)}
-              />
-              <IconButton icon={TickIcon} intent="success" />
-            </Pane>
+            <InputGrid></InputGrid>
           </Pane>
         </Pane>
       </main>

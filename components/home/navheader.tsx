@@ -1,8 +1,36 @@
 import styled from "styled-components";
-import { Blur, ButtonFive, ButtonFour, ButtonStandard } from "../common";
+import { Blur, ButtonStandard } from "../common";
 import Image from "next/image";
+import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
+import { useState } from "react";
 
-export default function NavHeader() {
+const iconSize = 32;
+
+export default function NavHeader({
+  refs,
+}: {
+  refs: {
+    [key: string]: React.RefObject<HTMLElement>;
+  };
+}) {
+  const [showMenu, setShowMenu] = useState(false);
+  const [menuToggle, setMenuToggle] = useState(true);
+  const handleToggleMenu = () => {
+    setMenuToggle(!menuToggle);
+    setShowMenu(!showMenu);
+  };
+
+  const scrollToSection = (section: React.RefObject<HTMLElement>) => {
+    return () => {
+      if (section.current) {
+        section.current?.scrollIntoView({ behavior: "smooth" });
+      }
+      if (showMenu) {
+        handleToggleMenu();
+      }
+    };
+  };
+
   return (
     <HeaderContainer>
       <Logo>
@@ -18,25 +46,32 @@ export default function NavHeader() {
         <TextBlock>JZ-JT</TextBlock>
       </Logo>
 
-      <div className="menutoggle"></div>
-      <div id="nav">
-        <NavTag>
-          <MenuButton>
+      <MenuToggle>
+        <MenuToggleIcon show={!menuToggle} onClick={handleToggleMenu}>
+          <HiOutlineX size={iconSize}></HiOutlineX>
+        </MenuToggleIcon>
+        <MenuToggleIcon show={menuToggle} onClick={handleToggleMenu}>
+          <HiOutlineMenu size={iconSize}></HiOutlineMenu>
+        </MenuToggleIcon>
+      </MenuToggle>
+      <Navigation>
+        <HeaderNavigation>
+          <MenuButton onClick={scrollToSection(refs["markets"])}>
             <MenuSpan>
               <MenuTitle>Top Stocks</MenuTitle>
             </MenuSpan>
           </MenuButton>
-          <MenuButton>
+          <MenuButton onClick={scrollToSection(refs["features"])}>
             <MenuSpan>
               <MenuTitle>Features</MenuTitle>
             </MenuSpan>
           </MenuButton>
-          <MenuButton>
+          <MenuButton onClick={scrollToSection(refs["stats"])}>
             <MenuSpan>
               <MenuTitle>Stats</MenuTitle>
             </MenuSpan>
           </MenuButton>
-          <MenuButton>
+          <MenuButton onClick={scrollToSection(refs["pricingPlan"])}>
             <MenuSpan>
               <MenuTitle>Pricing Plans</MenuTitle>
             </MenuSpan>
@@ -44,12 +79,35 @@ export default function NavHeader() {
           <div>
             <ButtonStandard>Launch</ButtonStandard>
           </div>
-        </NavTag>
-        <NavMobileMessage>Scroll to view more →</NavMobileMessage>
-        <NavMobileTradeButtonWrapper>
-          <ButtonStandard>Trade</ButtonStandard>
-        </NavMobileTradeButtonWrapper>
-      </div>
+        </HeaderNavigation>
+      </Navigation>
+      {showMenu && (
+        <MobileNavigation>
+          <HeaderNavigationMobile>
+            <MenuButton onClick={scrollToSection(refs["markets"])}>
+              <MenuSpan>
+                <MenuTitle>Top Stocks</MenuTitle>
+              </MenuSpan>
+            </MenuButton>
+            <MenuButton onClick={scrollToSection(refs["features"])}>
+              <MenuSpan>
+                <MenuTitle>Features</MenuTitle>
+              </MenuSpan>
+            </MenuButton>
+            <MenuButton onClick={scrollToSection(refs["stats"])}>
+              <MenuSpan>
+                <MenuTitle>Stats</MenuTitle>
+              </MenuSpan>
+            </MenuButton>
+            <MenuButton onClick={scrollToSection(refs["pricingPlan"])}>
+              <MenuSpan>
+                <MenuTitle>Pricing Plans</MenuTitle>
+              </MenuSpan>
+            </MenuButton>
+            <ButtonStandard>Trade</ButtonStandard>
+          </HeaderNavigationMobile>
+        </MobileNavigation>
+      )}
     </HeaderContainer>
   );
 }
@@ -91,7 +149,48 @@ const TextBlock = styled.div`
   margin-left: 1.25rem;
 `;
 
-const NavTag = styled.div`
+const MenuToggle = styled.div`
+  @media (max-width: 768px) {
+    display: flex;
+    position: relative;
+    right: initial;
+    top: initial;
+  }
+
+  border: none;
+  background-color: transparent;
+  color: rgb(255, 255, 255);
+  display: none;
+  z-index: 9999;
+  width: 30px;
+  height: 30px;
+  margin-right: 6px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MenuToggleIcon = styled.div`
+  opacity: 1;
+  display: ${(props: { show: boolean }) => (props.show ? "flex" : "none")};
+
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+`;
+
+const Navigation = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+    position: fixed;
+    top: 84px;
+    left: 0px;
+    width: 100%;
+    height: calc(100vh - 84px);
+    background-color: rgb(21, 21, 34);
+  }
+`;
+
+const HeaderNavigation = styled.nav`
   opacity: 1;
 
   box-sizing: border-box;
@@ -139,25 +238,23 @@ const MenuTitle = styled.p`
   }
 `;
 
-const NavMobileMessage = styled.p`
-  display: none;
-  position: absolute;
-  bottom: 2rem;
-  left: 2rem;
-  border: 1px solid rgb(40, 40, 59);
-  --tw-text-opacity: 1;
-  color: rgba(200, 199, 216, var(--tw-text-opacity));
-  padding: 0.5rem 1rem;
-  --tw-bg-opacity: 1;
-  background-color: rgba(26, 26, 39, var(--tw-bg-opacity));
-  border-radius: 1.5rem;
-  z-index: 50;
-
-  @media (min-width: 768px) {
-    text-align: left;
+const MobileNavigation = styled.div`
+  @media (max-width: 768px) {
+    display: block;
+    position: fixed;
+    top: 84px;
+    left: 0px;
+    width: 100%;
+    height: calc(100vh - 84px);
+    background-color: rgb(21, 21, 34);
   }
 `;
 
-const NavMobileTradeButtonWrapper = styled.div`
-  display: none;
+const HeaderNavigationMobile = styled.nav`
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 `;

@@ -6,11 +6,24 @@ import NavHeader from "@/components/home/navheader";
 import StatisticsSection from "@/components/home/statistics-section";
 import { Inter } from "@next/font/google";
 import Head from "next/head";
+import { useRef } from "react";
 import styled from "styled-components";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const marketsRef = useRef<HTMLDivElement>(null);
+  const featuresRef = useRef<HTMLDivElement>(null);
+  const statsRef = useRef<HTMLDivElement>(null);
+  const pricingPlanRef = useRef<HTMLElement>(null);
+
+  const refs = {
+    markets: marketsRef,
+    features: featuresRef,
+    stats: statsRef,
+    pricingPlan: pricingPlanRef,
+  };
+
   return (
     <>
       <Head>
@@ -43,14 +56,20 @@ export default function Home() {
               </PageVideo>
             </PageFeature>
           </PageLayer>
-          <NavHeader></NavHeader>
+          <NavHeader refs={refs}></NavHeader>
 
           <Content>
             <HeroSection></HeroSection>
             <ContentCentered>
-              <MarketsSection></MarketsSection>
-              <FeaturesSection></FeaturesSection>
-              <StatisticsSection></StatisticsSection>
+              <div ref={marketsRef}>
+                <MarketsSection></MarketsSection>
+              </div>
+              <div ref={featuresRef}>
+                <FeaturesSection></FeaturesSection>
+              </div>
+              <div ref={statsRef}>
+                <StatisticsSection></StatisticsSection>
+              </div>
             </ContentCentered>
           </Content>
 

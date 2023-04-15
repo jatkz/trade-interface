@@ -23,25 +23,25 @@ export default function StatisticsSection() {
             <Center>
               <StatisticsBackground>
                 <StatisticsItem>
-                  <StatisticsValue>
-                    <div>$453,874,394</div>
-                    <StatisticsLabel>LAST 24H</StatisticsLabel>
-                  </StatisticsValue>
                   <Description>Trading Volume</Description>
-                </StatisticsItem>
-                <StatisticsItem>
                   <StatisticsValue>
-                    <div>128,743</div>
+                    $453,874,394
                     <StatisticsLabel>LAST 24H</StatisticsLabel>
                   </StatisticsValue>
+                </StatisticsItem>
+                <StatisticsItem>
                   <Description>Trades</Description>
-                </StatisticsItem>
-                <StatisticsItem>
                   <StatisticsValue>
-                    <div>$156,120,085</div>
+                    128,743
                     <StatisticsLabel>LAST 24H</StatisticsLabel>
                   </StatisticsValue>
+                </StatisticsItem>
+                <StatisticsItem>
                   <Description>Open Interest</Description>
+                  <StatisticsValue>
+                    $156,120,085
+                    <StatisticsLabel>LAST 24H</StatisticsLabel>
+                  </StatisticsValue>
                 </StatisticsItem>
               </StatisticsBackground>
             </Center>
@@ -82,7 +82,7 @@ const StatisticsWidth = styled.div`
   padding-right: 1rem;
 
   @media (min-width: 640px) {
-    max-width: 48rem;
+    max-width: 60rem;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
   }
@@ -128,16 +128,23 @@ const StatisticsItem = styled.div`
   border-bottom-width: 1px;
   --tw-border-opacity: 1;
   border-color: rgba(40, 40, 59, var(--tw-border-opacity));
-  padding: 1.5rem;
   text-align: center;
+  padding: 1.5rem 0 1.5rem 0;
 
   @media (min-width: 640px) {
     border-width: 0px 1px 0px 0px;
   }
+
+  @media (min-width: 1024px) {
+    padding: 1.5rem;
+  }
+
+  &:hover {
+    filter: brightness(1.15);
+  }
 `;
 
 const Description = styled.span`
-  order: 1;
   margin-bottom: 0.5rem;
   font-size: 1.025rem;
   line-height: 1.5rem;
@@ -150,7 +157,6 @@ const Description = styled.span`
 `;
 
 const StatisticsValue = styled.span`
-  order: 2;
   font-size: 2.25rem;
   line-height: 2.5rem;
   font-weight: 500;
@@ -162,8 +168,13 @@ const StatisticsValue = styled.span`
     line-height: 1;
   }
 
-  @media (min-width: 1024px) {
+  @media (min-width: 769px) {
     padding-top: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
+
+  @media (min-width: 1024px) {
     margin-left: 3rem;
     margin-right: 3rem;
   }

@@ -7,7 +7,9 @@ export default function HeroSection() {
     <Section>
       <Copy>
         <PageHeading>Research Trades</PageHeading>
-        <PageSubheading>Heading</PageSubheading>
+        <PageSubheading>
+          Heading Explain Money Stuff Yes Example Text
+        </PageSubheading>
         <PageMove>
           <PageLink>
             <ButtonStandard>Launch App</ButtonStandard>

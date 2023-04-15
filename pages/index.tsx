@@ -3,6 +3,7 @@ import Footer from "@/components/home/footer";
 import HeroSection from "@/components/home/hero-section";
 import MarketsSection from "@/components/home/markets-section";
 import NavHeader from "@/components/home/navheader";
+import PricingPlan from "@/components/home/pricing-plan";
 import StatisticsSection from "@/components/home/statistics-section";
 import { Inter } from "@next/font/google";
 import Head from "next/head";
@@ -69,6 +70,9 @@ export default function Home() {
               </div>
               <div ref={statsRef}>
                 <StatisticsSection></StatisticsSection>
+              </div>
+              <div ref={pricingPlanRef}>
+                <PricingPlan></PricingPlan>
               </div>
             </ContentCentered>
           </Content>

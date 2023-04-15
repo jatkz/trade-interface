@@ -5,7 +5,12 @@ export default function Footer() {
   return (
     <FixedFooter>
       <FooterContainer>
-        <a href="#" className="w-inline-block">
+        <a
+          href="https://github.com/jatkz/trade-interface"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-inline-block"
+        >
           <FooterImage
             src="/images/iconmonstr-github-1.svg"
             loading="lazy"
@@ -49,4 +54,20 @@ const FooterImage = styled(Image)`
   margin-right: 10px;
   margin-left: 10px;
   background-color: transparent;
+
+  --tw-scale-x: 1;
+  --tw-scale-y: 1;
+  --tw-rotate: 0;
+
+  transform: rotate(var(--tw-rotate)) scaleX(var(--tw-scale-x))
+    scaleY(var(--tw-scale-y));
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 100ms;
+
+  &:hover {
+    --tw-scale-x: 1.1;
+    --tw-scale-y: 1.1;
+    --tw-rotate: 30deg;
+  }
 `;

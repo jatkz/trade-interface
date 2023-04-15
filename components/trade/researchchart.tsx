@@ -28,8 +28,10 @@ export const ChartComponent = (props: {
   const chartContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!chartContainerRef.current) return;
     const handleResize = () => {
-      chart.applyOptions({ width: chartContainerRef.current.clientWidth });
+      if (chartContainerRef.current)
+        chart.applyOptions({ width: chartContainerRef.current.clientWidth });
     };
 
     const chart = createChart(chartContainerRef.current, {

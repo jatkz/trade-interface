@@ -16,7 +16,7 @@ export default function Home() {
   const marketsRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
-  const pricingPlanRef = useRef<HTMLElement>(null);
+  const pricingPlanRef = useRef<HTMLDivElement>(null);
 
   const refs = {
     markets: marketsRef,

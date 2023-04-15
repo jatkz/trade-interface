@@ -111,9 +111,7 @@ export default function TableOne({ isConnected, medium }: Props) {
             <IconButton icon={TickIcon} intent="success" />
           </Pane>
           <Pane paddingY={2}></Pane>
-          <Pane>
-            <InputGrid></InputGrid>
-          </Pane>
+          <Pane>{/* <InputGrid></InputGrid> */}</Pane>
         </Pane>
       </main>
     </>

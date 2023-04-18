@@ -18,32 +18,38 @@ export default function FeaturesSection() {
   const featureElements = [
     {
       title: "Quantify ROI",
-      subtitle: "Low Fees",
+      subtitle:
+        "Evaluate your investments with precision, using our robust ROI calculator to measure potential returns and optimize your strategy.",
       icon: HiBeaker,
     },
     {
       title: "Visualize History",
-      subtitle: "Low Fees",
+      subtitle:
+        "Easily track historical performance and trends with our intuitive, interactive charts and visualizations.",
       icon: HiChartBar,
     },
     {
       title: "Research Strategies",
-      subtitle: "Low Fees",
+      subtitle:
+        "Leverage our extensive library of pre-built and customizable strategies, enabling you to find the perfect fit for your trading goals.",
       icon: HiLightningBolt,
     },
     {
       title: "Structured Approach",
-      subtitle: "Low Fees",
+      subtitle:
+        "Employ a systematic, data-driven approach to trading, thanks to our platform's powerful analytics and backtesting capabilities.",
       icon: HiCubeTransparent,
     },
     {
       title: "During Market Hours",
-      subtitle: "Low Fees",
+      subtitle:
+        "Access real-time market data and analysis during trading hours, helping you make informed decisions and seize opportunities.",
       icon: HiOutlineClock,
     },
     {
       title: "Going Long or Short",
-      subtitle: "Low Fees",
+      subtitle:
+        "Capitalize on both bullish and bearish market conditions by learning how to effectively implement long and short strategies.",
       icon: HiPresentationChartLine,
     },
   ];
@@ -52,14 +58,14 @@ export default function FeaturesSection() {
     <Features>
       <FeaturesWidth>
         <FeaturesCenter>
-          <FeaturesLabel>Heading</FeaturesLabel>
-          <FeaturesHeading>Heading</FeaturesHeading>
+          <FeaturesLabel>Unleash Your Trading Potential</FeaturesLabel>
+          <FeaturesHeading>
+            Empower Your Investment Decisions with Cutting-Edge Analysis Tools
+          </FeaturesHeading>
           <FeaturesDescription>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            varius enim in eros elementum tristique. Duis cursus, mi quis
-            viverra ornare, eros dolor interdum nulla, ut commodo diam libero
-            vitae erat. Aenean faucibus nibh et justo cursus id rutrum lorem
-            imperdiet. Nunc ut sem vitae risus tristique posuere.
+            Our powerful web application offers a comprehensive suite of
+            features designed to help you research, analyze, and create winning
+            trading strategies in stocks and cryptocurrency markets.
           </FeaturesDescription>
         </FeaturesCenter>
         <FeaturesContainer>

@@ -8,14 +8,15 @@ export default function HeroSection() {
       <Copy>
         <PageHeading>Research Trades</PageHeading>
         <PageSubheading>
-          Heading Explain Money Stuff Yes Example Text
+          Analyze trends starting <TextWhite>for free</TextWhite>, no credit
+          card required. <TextGrey>Upgrade for additonal features.</TextGrey>
         </PageSubheading>
         <PageMove>
           <PageLink>
             <ButtonStandard>Launch App</ButtonStandard>
+            {/* <a href="#" className="w-inline-block"></a>
             <a href="#" className="w-inline-block"></a>
-            <a href="#" className="w-inline-block"></a>
-            <a href="#" className="w-inline-block"></a>
+            <a href="#" className="w-inline-block"></a> */}
           </PageLink>
         </PageMove>
         <MarginYMove>
@@ -152,6 +153,14 @@ const PageSubheading = styled.h2`
   @media (min-width: 1280px) {
     text-align: left;
   }
+`;
+
+const TextWhite = styled.span`
+  color: rgba(255, 255, 255, 1);
+`;
+
+const TextGrey = styled.span`
+  color: rgba(128, 126, 152, 1);
 `;
 
 const PageMove = styled.div`

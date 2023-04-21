@@ -5,6 +5,7 @@ import MarketsSection from "@/components/home/markets-section";
 import NavHeader from "@/components/home/navheader";
 import PricingPlan from "@/components/home/pricing-plan";
 import StatisticsSection from "@/components/home/statistics-section";
+import { FadeInEffect, FadeInMixin } from "@/components/withFadeIn";
 import { Inter } from "@next/font/google";
 import Head from "next/head";
 import { useRef } from "react";
@@ -25,16 +26,18 @@ export default function Home() {
     pricingPlan: pricingPlanRef,
   };
 
+  const isVisible = FadeInEffect(200);
+
   return (
     <>
       <Head>
         <title>JATKZ TRADES</title>
         <meta
           name="description"
-          content="opinionated simplified stock trading research"
+          content="curated simplified stock cryptocurrencies trading research visualization analysis"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico?v=4" />
+        <link rel="icon" href="/favicon.ico?v=5" />
       </Head>
       <main>
         <PageBackground>
@@ -61,7 +64,7 @@ export default function Home() {
 
           <Content>
             <HeroSection></HeroSection>
-            <ContentCentered>
+            <ContentCentered className={isVisible ? "visible" : ""}>
               <div ref={marketsRef}>
                 <MarketsSection></MarketsSection>
               </div>
@@ -138,4 +141,6 @@ const ContentCentered = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  ${FadeInMixin}
 `;

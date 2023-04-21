@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import Image from "next/image";
+import { FadeInEffect, FadeInMixin } from "../withFadeIn";
 
 export default function Footer() {
+  const isVisible = FadeInEffect(100);
   return (
-    <FixedFooter>
+    <FixedFooter className={isVisible ? "visible" : ""}>
       <FooterContainer>
         <a
           href="https://github.com/jatkz/trade-interface"
@@ -25,6 +27,7 @@ export default function Footer() {
 }
 
 const FixedFooter = styled.div`
+  ${FadeInMixin}
   position: fixed;
   right: 1rem;
   bottom: 1rem;

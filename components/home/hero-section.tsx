@@ -1,10 +1,14 @@
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { ButtonSix, ButtonStandard } from "../common";
+import { FadeInEffect, FadeInMixin } from "../withFadeIn";
 
 export default function HeroSection() {
+  const isVisible = FadeInEffect(100);
+
   return (
-    <Section>
+    <Section className={isVisible ? "visible" : ""}>
       <Copy>
         <PageHeading>Research Trades</PageHeading>
         <PageSubheading>
@@ -74,6 +78,7 @@ export default function HeroSection() {
 }
 
 const Section = styled.div`
+  ${FadeInMixin}
   overflow-x: hidden;
   padding-top: 2.5rem;
   display: flex;

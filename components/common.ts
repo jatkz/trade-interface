@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const Blur = styled.div`
   @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {

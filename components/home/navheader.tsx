@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { Blur, ButtonStandard } from "../common";
 import Image from "next/image";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { FadeInEffect, FadeInMixin } from "../withFadeIn";
 
 const iconSize = 32;
 
@@ -31,8 +32,10 @@ export default function NavHeader({
     };
   };
 
+  const isVisible = FadeInEffect(400);
+
   return (
-    <HeaderContainer>
+    <HeaderContainer className={isVisible ? "visible" : ""}>
       <Logo>
         <StyledIcon>
           <Image2
@@ -113,6 +116,7 @@ export default function NavHeader({
 }
 
 const HeaderContainer = styled(Blur)`
+  ${FadeInMixin}
   display: flex;
   flex-direction: row;
   justify-content: space-between;

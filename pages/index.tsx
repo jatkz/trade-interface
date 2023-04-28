@@ -40,54 +40,50 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico?v=5" />
       </Head>
       <main>
-        <PageBackground>
-          <PageLayer>
-            <PageFeature>
-              <PageOverlay></PageOverlay>
-              <PageVideo
-                preload="auto"
-                loop
-                muted
-                autoPlay
-                playsInline
-                disablePictureInPicture
-              >
-                <PageSource
-                  // src="/undersea-light.mp4"
-                  src="/stars-space.mp4"
-                  type="video/mp4"
-                ></PageSource>
-              </PageVideo>
-            </PageFeature>
-          </PageLayer>
-          <NavHeader refs={refs}></NavHeader>
+        <PageLayer>
+          <PageFeature>
+            <PageOverlay></PageOverlay>
+            <PageVideo
+              preload="auto"
+              loop
+              muted
+              autoPlay
+              playsInline
+              disablePictureInPicture
+            >
+              <PageSource
+                // src="/undersea-light.mp4"
+                src="/stars-space.mp4"
+                type="video/mp4"
+              ></PageSource>
+            </PageVideo>
+          </PageFeature>
+        </PageLayer>
+        <NavHeader refs={refs}></NavHeader>
 
-          <Content>
-            <HeroSection></HeroSection>
-            <ContentCentered className={isVisible ? "visible" : ""}>
-              <div ref={marketsRef}>
-                <MarketsSection></MarketsSection>
-              </div>
-              <div ref={featuresRef}>
-                <FeaturesSection></FeaturesSection>
-              </div>
-              <div ref={statsRef}>
-                <StatisticsSection></StatisticsSection>
-              </div>
-              <div ref={pricingPlanRef}>
-                <PricingPlan></PricingPlan>
-              </div>
-            </ContentCentered>
-          </Content>
+        <Content>
+          <HeroSection></HeroSection>
+          <ContentCentered className={isVisible ? "visible" : ""}>
+            <div ref={marketsRef}>
+              <MarketsSection></MarketsSection>
+            </div>
+            <div ref={featuresRef}>
+              <FeaturesSection></FeaturesSection>
+            </div>
+            <div ref={statsRef}>
+              <StatisticsSection></StatisticsSection>
+            </div>
+            <div ref={pricingPlanRef}>
+              <PricingPlan></PricingPlan>
+            </div>
+          </ContentCentered>
+        </Content>
 
-          <Footer></Footer>
-        </PageBackground>
+        <Footer></Footer>
       </main>
     </>
   );
 }
-
-const PageBackground = styled.div``;
 
 const PageLayer = styled.div`
   position: fixed;
